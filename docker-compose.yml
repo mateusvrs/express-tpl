@@ -1,0 +1,25 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "npm run build && npm run dev"
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src:/home/node/app/src
+    container_name: express
+    env_file:
+      - .env
+  
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    container_name: postgres
