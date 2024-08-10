@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Book {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   title     String
   author    String
   createdAt DateTime @default(now())
