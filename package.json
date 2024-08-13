@@ -6,6 +6,7 @@
   "scripts": {
     "test": "chmod +x scripts/test.sh && ./scripts/test.sh",
     "test:exec": "jest --passWithNoTests --detectOpenHandles tests",
+    "test:exec:coverage": "npm run test:exec -- --coverage",
     "setup": "chmod +x scripts/setup.sh && ./scripts/setup.sh",
     "build": "npx tsc -p tsconfig.prod.json && npx tsc-alias -p tsconfig.prod.json",
     "start:prod": "NODE_ENV=production node build/index.js",

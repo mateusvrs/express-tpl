@@ -1,14 +1,30 @@
 #!/bin/sh
 set -e
 
-# Start the services in detached mode
-docker compose -f docker/docker-compose.test.yml up -d
+# Initialize variable
+COVERAGE=false
 
-# Get the container ID of the 'node' service
-container_id=$(docker compose -f docker/docker-compose.test.yml ps -q node)
+# Parse arguments
+for arg in "$@"; do
+  case $arg in
+    --coverage)
+      COVERAGE=true
+      shift
+      ;;
+    *)
+      # unknown option
+      ;;
+  esac
+done
 
-# Stream logs in real-time
-docker compose -f docker/docker-compose.test.yml logs -f node
+if [ "$COVERAGE" = true ]; then
+  # Run the test suite with coverage
+  docker compose -f docker/docker-compose.test.yml run --rm node npm run test:exec:coverage
+else
+  # Run the test suite
+  docker compose -f docker/docker-compose.test.yml run --rm node npm run test:exec
+  rm -rf ./coverage
+fi
 
 # Shut down the services and remove volumes
 docker compose -f docker/docker-compose.test.yml down -v
