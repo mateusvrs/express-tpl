@@ -4,26 +4,27 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - .env
+      - ../.env
     ports:
       - 5432:5432
     container_name: postgres
 
   api:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ../
+      target: base
+      dockerfile: docker/Dockerfile
     command: npm run dev
     expose:
       - 3000
     ports:
       - 3000:3000
     volumes:
-      - ./src:/home/node/app/src
-      - ./prisma:/home/node/app/prisma
+      - .././src:/home/node/app/src
+      - .././prisma:/home/node/app/prisma
     container_name: express
     env_file:
-      - .env
+      - ../.env
     depends_on:
       - db
 

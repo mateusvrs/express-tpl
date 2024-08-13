@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:16
+    env_file:
+      - ../.env
+    ports:
+      - 5433:5432
+    container_name: postgres
+
+  node:
+    build:
+      context: ../
+      target: test
+      dockerfile: docker/Dockerfile
+    command: npm run test:exec
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    volumes:
+      - .././src:/home/node/app/src
+      - .././prisma:/home/node/app/prisma
+      - .././tests:/home/node/app/tests
+    container_name: node
+    env_file:
+      - ../.env
+    depends_on:
+      - db
