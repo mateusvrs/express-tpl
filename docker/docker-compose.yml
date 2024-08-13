@@ -14,7 +14,7 @@ services:
       context: ../
       target: base
       dockerfile: docker/Dockerfile
-    command: npm run dev
+    command: npm run dev:docker
     expose:
       - 3000
     ports:
