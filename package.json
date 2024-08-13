@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "chmod +x scripts/test.sh && ./scripts/test.sh",
+    "stop:test:vls": "docker compose -f docker/docker-compose.test.yml down -v",
     "test:exec": "jest --passWithNoTests --detectOpenHandles tests",
     "test:exec:coverage": "npm run test:exec -- --coverage",
     "setup": "chmod +x scripts/setup.sh && ./scripts/setup.sh",
@@ -14,7 +15,10 @@
     "tsc:watch": "nodemon --watch 'tsconfig.json' --exec 'tsc -w'",
     "tsc-alias:watch": "nodemon --watch 'tsconfig.json' --exec 'tsc-alias -w'",
     "eslint:watch": "nodemon --watch 'src' --ext 'js,ts' --exec 'eslint src' --delay 500ms",
-    "dev": "concurrently \"npm:eslint:watch\" \"npm:tsc:watch\" \"npm:tsc-alias:watch\" \"npm:start:watch\""
+    "dev:docker": "concurrently \"npm:eslint:watch\" \"npm:tsc:watch\" \"npm:tsc-alias:watch\" \"npm:start:watch\"",
+    "dev": "npm run setup && docker compose -f docker/docker-compose.yml up",
+    "stop": "docker compose -f docker/docker-compose.yml down",
+    "stop:vls": "docker compose -f docker/docker-compose.yml down -v"
   },
   "keywords": [
     "study"
