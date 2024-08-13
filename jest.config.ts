@@ -11,6 +11,7 @@ const config: JestConfigWithTsJest = {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
+    coverageDirectory: 'coverage'
 }
 
 export default config

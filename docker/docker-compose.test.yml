@@ -12,7 +12,6 @@ services:
       context: ../
       target: test
       dockerfile: docker/Dockerfile
-    command: npm run test:exec
     expose:
       - 3000
     ports:
@@ -21,6 +20,7 @@ services:
       - .././src:/home/node/app/src
       - .././prisma:/home/node/app/prisma
       - .././tests:/home/node/app/tests
+      - .././coverage:/home/node/app/coverage
     container_name: node
     env_file:
       - ../.env
