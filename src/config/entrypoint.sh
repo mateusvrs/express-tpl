@@ -9,7 +9,16 @@ done
 
 echo 'PostgreSQL has started'
 
+echo 'Migrating database...'
+npx prisma migrate deploy
+
+echo 'Generate Prisma Client...'
+npx prisma generate
+
 echo 'Transpiling TypeScript...'
 npx tsc
+
+echo 'Typescript alias paths...'
+npx tsc-alias
 
 exec "$@"

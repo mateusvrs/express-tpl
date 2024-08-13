@@ -1,5 +1,8 @@
 import express, { Express, Request, Response } from 'express'
-import booksRouter from './routes/books'
+import swaggerUi from 'swagger-ui-express'
+import booksRouter from '@/routes/books'
+import path from 'path'
+import fs from 'fs'
 
 const app: Express = express()
 const port = 3000
@@ -14,6 +17,13 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/books', booksRouter)
 
-app.listen(port, () => {
-    console.log(`Example app listening on http://localhost:${port}/`)
+const swaggerDocument = JSON.parse(fs.readFileSync(path.join(__dirname, '../src', 'swagger.json'), 'utf8'))
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
+app.use((req: Request, res: Response) => {
+    res.status(404).json({
+        error: 'Not Found'
+    })
 })
+
+export default app.listen(port)

@@ -1,5 +1,5 @@
 import express, { Router } from "express"
-import { listBooks, createBook, updateBook, deleteBook } from "../controllers/books"
+import { listBooks, createBook, updateBook, deleteBook } from "@/controllers/books"
 
 const router: Router = express.Router()
 
