@@ -1,0 +1,40 @@
+name: Codecov Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+    contents: write
+
+jobs:
+  test:
+    name: api test coverage
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Config environment
+      run: npm run setup
+    
+    - name: Run Tests
+      run: npm test -- --coverage
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4
+      with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage/coverage-final.json
+          fail_ci_if_error: true
+    
+    - name: Stop Docker Compose
+      run: docker compose -f docker/docker-compose.test.yml down -v
