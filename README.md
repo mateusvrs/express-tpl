@@ -36,13 +36,12 @@ git clone https://github.com/mateusvrs/express-tpl.git
 
 ```bash
 npm install
-npm run setup
 ```
 
 3. Start the development server:
 
 ```bash
-docker compose -f docker/docker-compose.yml up
+npm run dev
 ```
 
 4. Open your browser and navigate to `http://localhost:3000/docs` to see the API in action.
@@ -50,11 +49,11 @@ docker compose -f docker/docker-compose.yml up
 5. To stop the development server, run:
 
 ```bash
-docker compose -f docker/docker-compose.yml down
+npm run stop
 
 # or # to remove volumes
 
-docker compose -f docker/docker-compose.yml down -v
+npm run stop:vls
 ```
 
 ## :bar_chart: Testing
@@ -70,7 +69,7 @@ The first time you run the tests the docker image will be built, so it may take 
 After running the tests the container will be removed as well as the volumes. Although, if something goes wrong and the container is not removed, you can run the following command:
 
 ```bash
-docker compose -f docker/docker-compose.test.yml down -v
+npm run stop:test:vls
 ```
 
 ## :card_index_dividers: Database
