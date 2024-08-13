@@ -29,7 +29,17 @@ jobs:
     - name: Run ESLint
       run: npx eslint --fix --max-warnings 0
 
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if [[ -n "$(git status --porcelain)" ]]; then
+          echo "changes_detected=true" >> $GITHUB_ENV
+        else
+          echo "No changes detected, skipping commit."
+        fi
+
     - name: Commit and push changes
+      if: ${{ env.changes_detected == 'true' }}
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
