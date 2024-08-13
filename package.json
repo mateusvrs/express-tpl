@@ -4,10 +4,16 @@
   "description": "just to learn node.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx tsc",
-    "start": "NODE_ENV=production node build/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"node --watch build/index.js\""
+    "test": "chmod +x scripts/test.sh && ./scripts/test.sh",
+    "test:exec": "jest --passWithNoTests --detectOpenHandles tests",
+    "setup": "chmod +x scripts/setup.sh && ./scripts/setup.sh",
+    "build": "npx tsc -p tsconfig.prod.json && npx tsc-alias -p tsconfig.prod.json",
+    "start:prod": "NODE_ENV=production node build/index.js",
+    "start:watch": "nodemon --watch 'build' --watch 'src/swagger.json' --exec 'node build/index.js'",
+    "tsc:watch": "nodemon --watch 'tsconfig.json' --exec 'tsc -w'",
+    "tsc-alias:watch": "nodemon --watch 'tsconfig.json' --exec 'tsc-alias -w'",
+    "eslint:watch": "nodemon --watch 'src' --ext 'js,ts' --exec 'eslint src' --delay 500ms",
+    "dev": "concurrently \"npm:eslint:watch\" \"npm:tsc:watch\" \"npm:tsc-alias:watch\" \"npm:start:watch\""
   },
   "keywords": [
     "study"
@@ -16,13 +22,29 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^5.18.0",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@stylistic/eslint-plugin": "^2.6.2",
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.1.0",
+    "@types/supertest": "^6.0.2",
+    "@types/swagger-ui-express": "^4.1.6",
     "concurrently": "^8.2.2",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.4",
     "prisma": "^5.18.0",
-    "typescript": "^5.5.4"
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.4",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.1"
   }
 }
