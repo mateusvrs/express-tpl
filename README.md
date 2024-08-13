@@ -82,3 +82,11 @@ The database is managed by Prisma. The current migrations are applied automatica
 ```bash
 make migrate name="{text_the_migration_name}"
 ```
+
+## :hammer_and_wrench: Workflow
+
+The project have a pre-configured GitHub Actions workflow that runs the tests on every push to the main branch and uploads the coverage report to Codecov. Also, the workflow runs ESLint to check the code style and apply possible fixes automatically.
+
+If you want to set up the Codecov, you need to create an account on the platform and add the `CODECOV_TOKEN` secret to your repository. You can find the token on the Codecov website.
+
+The workflow is simple and can be customized according to your needs.
