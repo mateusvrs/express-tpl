@@ -1,6 +1,6 @@
-import { PrismaClient, Book } from '@prisma/client'
-import request from 'supertest'
-import server from '@/index'
+import { PrismaClient, Book } from "@prisma/client"
+import request from "supertest"
+import server from "@/index"
 
 afterEach(async () => {
     const prisma = new PrismaClient()
@@ -12,10 +12,10 @@ afterAll(async () => {
     server.close()
 })
 
-describe('Book complete Flow', () => {
+describe("Book complete Flow", () => {
     const checkOnListOfBooks = async (check: Book, quantity: number, present: boolean,) => {
         const listResponse = await request(server)
-            .get('/books')
+            .get("/books")
             .expect(200)
 
         const books = listResponse.body.data
@@ -27,20 +27,20 @@ describe('Book complete Flow', () => {
         else expect(book).toBeUndefined()
     }
 
-    it('should check flow of book creation with update', async () => {
+    it("should check flow of book creation with update", async () => {
         const createResponse = await request(server)
-            .post('/books')
+            .post("/books")
             .send({
-                title: 'New Book',
-                author: 'Jest',
+                title: "New Book",
+                author: "Jest",
             })
             .expect(201)
 
         await request(server)
-            .post('/books')
+            .post("/books")
             .send({
-                title: 'Another Book',
-                author: 'Express',
+                title: "Another Book",
+                author: "Express",
             })
             .expect(201)
 
@@ -49,19 +49,19 @@ describe('Book complete Flow', () => {
 
         const updateResponse = await request(server)
             .put(`/books/${createdBook.id}`)
-            .send({ title: 'Updated Book' })
+            .send({ title: "Updated Book" })
             .expect(200)
 
         const updatedBook = updateResponse.body.data
         await checkOnListOfBooks(updatedBook, 2, true)
     })
 
-    it('should check flow of book creation with delete', async () => {
+    it("should check flow of book creation with delete", async () => {
         const createResponse = await request(server)
-            .post('/books')
+            .post("/books")
             .send({
-                title: 'New Book',
-                author: 'Jest',
+                title: "New Book",
+                author: "Jest",
             })
             .expect(201)
 

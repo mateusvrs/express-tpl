@@ -1,6 +1,6 @@
-import { Request, Response } from 'express'
-import { Prisma, PrismaClient } from '@prisma/client'
-import { BookCreateInput, BookUpdateInput } from '@/validators/books'
+import { Request, Response } from "express"
+import { Prisma, PrismaClient } from "@prisma/client"
+import { BookCreateInput, BookUpdateInput } from "@/validators/books"
 
 const prisma = new PrismaClient()
 
@@ -9,12 +9,12 @@ const listBooks = async (req: Request, res: Response) => {
         const books = await prisma.book.findMany()
 
         res.status(200).json({
-            message: 'List of books',
+            message: "List of books",
             data: books,
         })
     } catch {
         res.status(500).json({
-            error: 'Internal server error',
+            error: "Internal server error",
         })
     }
 }
@@ -24,7 +24,7 @@ const createBook = async (req: Request, res: Response) => {
 
     if (!success) {
         return res.status(400).json({
-            error: 'Invalid input',
+            error: "Invalid input",
         })
     }
 
@@ -34,20 +34,20 @@ const createBook = async (req: Request, res: Response) => {
         })
 
         res.status(201).json({
-            message: 'Create a book',
+            message: "Create a book",
             data: book,
         })
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === 'P2002') {
+            if (error.code === "P2002") {
                 return res.status(400).json({
-                    error: 'Book already exists',
+                    error: "Book already exists",
                 })
             }
         }
 
         res.status(500).json({
-            error: 'Internal server error',
+            error: "Internal server error",
         })
     }
 }
@@ -59,7 +59,7 @@ const updateBook = async (req: Request, res: Response) => {
 
     if (!success) {
         return res.status(400).json({
-            error: 'Invalid input',
+            error: "Invalid input",
         })
     }
 
@@ -72,24 +72,24 @@ const updateBook = async (req: Request, res: Response) => {
         })
 
         res.status(200).json({
-            message: 'Update a book',
+            message: "Update a book",
             data: book,
         })
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === 'P2025') {
+            if (error.code === "P2025") {
                 return res.status(404).json({
-                    error: 'Book not found',
+                    error: "Book not found",
                 })
-            } else if (error.code === 'P2002') {
+            } else if (error.code === "P2002") {
                 return res.status(400).json({
-                    error: 'Book already exists',
+                    error: "Book already exists",
                 })
             }
         }
 
         res.status(500).json({
-            error: 'Internal server error',
+            error: "Internal server error",
         })
     }
 }
@@ -107,15 +107,15 @@ const deleteBook = async (req: Request, res: Response) => {
         res.status(204).send()
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            if (error.code === 'P2025') {
+            if (error.code === "P2025") {
                 return res.status(404).json({
-                    error: 'Book not found',
+                    error: "Book not found",
                 })
             }
         }
 
         res.status(500).json({
-            error: 'Internal server error',
+            error: "Internal server error",
         })
     }
 }
