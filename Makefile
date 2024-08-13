@@ -1,2 +1,2 @@
 migrate:
-	docker exec -it express npx prisma migrate dev --name $(name)
+	docker compose -f docker/docker-compose.yml up db -d && DATABASE_HOSTNAME=0.0.0.0 npx prisma migrate dev --name $(name) && docker compose -f docker/docker-compose.yml down db && npx prisma generate
