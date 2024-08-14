@@ -16,7 +16,7 @@
     "tsc-alias:watch": "nodemon --watch 'tsconfig.json' --exec 'tsc-alias -w'",
     "eslint:watch": "nodemon --watch 'src' --ext 'js,ts' --exec 'eslint src' --delay 500ms",
     "dev:docker": "concurrently \"npm:eslint:watch\" \"npm:tsc:watch\" \"npm:tsc-alias:watch\" \"npm:start:watch\"",
-    "dev": "npm run setup && docker compose -f docker/docker-compose.yml up",
+    "dev": "docker compose -f docker/docker-compose.yml up",
     "stop": "docker compose -f docker/docker-compose.yml down",
     "stop:vls": "docker compose -f docker/docker-compose.yml down -v"
   },

@@ -35,7 +35,7 @@ git clone https://github.com/mateusvrs/express-tpl.git
 2. Install the dependencies and run the setup script:
 
 ```bash
-npm install
+npm install && npm run setup
 ```
 
 3. Start the development server:
